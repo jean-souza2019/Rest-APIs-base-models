@@ -11,9 +11,8 @@ module.exports = {
                 age,
                 city
             });
-            await ClientModel.add();
-
-            res.status(201).send(client);
+            const returnId = await client.add();
+            res.status(201).send(returnId);
         } catch (error) {
             throw new Error(error);
         }
@@ -43,11 +42,10 @@ module.exports = {
 
     delete: async (req, res) => {
         const id = req.params.id;
-        // fazer validação do id antes
         try {
-            await ClientModel.delete(id);
+            const returning = await ClientModel.delete(id);
 
-            res.status(200).send(`Client ${id} has been deleted`);
+            res.status(200).send(returning ? returning : `Client ${id} has been deleted`);
         } catch (error) {
             throw new Error(error);
         }
@@ -55,7 +53,6 @@ module.exports = {
 
     toUpdate: async (req, res) => {
         const id = req.params.id;
-        // fazer validação do id antes
         try {
             const { fullName, sex, birthDate, age, city } = req.body;
             const client = new ClientModel({
@@ -67,11 +64,9 @@ module.exports = {
                 city
             });
 
+            const returning = await client.toUpdate();
 
-
-            await client.toUpdate();
-
-            res.status(200).send(`Client ${id} has been updated`);
+            res.status(200).send(returning ? returning : `Client ${id} has been updated`);
         } catch (error) {
             throw new Error(error);
         }
