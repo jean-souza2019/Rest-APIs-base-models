@@ -17,7 +17,6 @@ module.exports = {
     },
 
     getByName: name => {
-        console.log(`name: ${name}`)
         return new Promise((resolve, reject) => {
             db.all(
                 `SELECT * FROM cities

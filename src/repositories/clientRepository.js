@@ -11,11 +11,22 @@ module.exports = {
                     if (error) {
                         return reject(error);
                     }
-
-                    return resolve(row);
+                    db.get(
+                        `SELECT MAX(ID) as ID FROM clients`,
+                        (error, row) => {
+                            if (error) {
+                                return resolve(error);
+                            }
+                            return resolve(row);
+                        }
+                    );
                 });
         });
     },
+
+
+
+    
 
     getById: (id) => {
         return new Promise((resolve, reject) => {
@@ -35,9 +46,9 @@ module.exports = {
 
     getByName: (name) => {
         return new Promise((resolve, reject) => {
-            db.get(
+            db.all(
                 `SELECT * FROM clients
-                WHERE name = ?` ,
+                WHERE fullName = ?` ,
                 [name],
                 (error, row) => {
                     if (error) {

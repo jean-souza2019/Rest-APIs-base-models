@@ -11,11 +11,11 @@ class Client {
         // Create validations params;
     }
 
-    async add() {
-        return await ClientRepository.add(this);
+    add() {
+        return ClientRepository.add(this);
     }
 
-    async getById(id) {
+    static async getById(id) {
         const clientInformation = await ClientRepository.getById(id);
         if (!clientInformation) {
             return null;
@@ -23,7 +23,7 @@ class Client {
         return clientInformation;
     }
 
-    async getByName(name) {
+    static async getByName(name) {
         const clientInformation = await ClientRepository.getByName(name);
         if (!clientInformation) {
             return null;
@@ -31,11 +31,10 @@ class Client {
         return clientInformation;
     }
 
-    async delete(id) {
+    static async delete(id) {
         if (! await Client.getById(id)) {
             return (`Client ${id} not exists`)
         }
-
         return await ClientRepository.delete(id);
     }
 
@@ -48,3 +47,5 @@ class Client {
     }
 
 }
+
+module.exports = Client;

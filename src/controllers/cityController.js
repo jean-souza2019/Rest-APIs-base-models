@@ -3,7 +3,6 @@ const CityModel = require('../models/cityModel');
 module.exports = {
     add: async (req, res) => {
         try {
-            console.log(req.body);
             const city = new CityModel(req.body);
             await city.add();
 
